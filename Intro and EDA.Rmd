@@ -27,24 +27,58 @@ The dataset contains a total of 228 patients and 10 variables. A brief descripti
 * meal.cal:	Calories consumed at meals
 * wt.loss:	Weight loss in last six months
 
-Survival endpoint is the death of patients. The type of censoring is right censoring, which means patients left the study before their death. Among 228 patients, 63 of them are right censored and the number of events is 165. We group the patients by their survival status and provides the descriptive statistics of other variables. 
+Survival endpoint is the death of patients. The type of censoring is right censoring, which means patients left the study before their death. Among 228 patients, 63 of them are right censored and the number of events is 165. We group the patients by their survival status and provide the descriptive statistics of other variables. From the table, we can see that average survival time for censored and dead patients is 363 days and 283 days, respectively. Generally speaking, patients who alive were younger than patients who died, and female had higher chance of survival than female.
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 library(tidyverse)
 library(survival)
 library(table1)
+library(kableExtra)
 
 data <- lung
 
 data$status <- factor(data$status,
                       levels=c(1,2),
                       labels = c("Alive", "Death"))
+data$sex <- factor(data$sex,
+                   levels=c(1,2),
+                   labels = c("Male", "Female"))
+data$ph.ecog <- factor(data$ph.ecog,
+                       levels=c(0,1,2,3,4),
+                       labels = c("Asymptomatic", 
+                                  "Symptomatic but completely ambulatory",
+                                  "In bed <50% of the day",
+                                  "In bed > 50% of the day but not bedbound",
+                                  "Bedbound"))
+data$ph.karno <- factor(data$ph.karno)
+      #                  levels=c(0,10,20,30,40,50,60,70,80,90,100))
+data$pat.karno <- factor(data$pat.karno)
+       #                  levels=c(0,10,20,30,40,50,60,70,80,90,100))
 
-table1(~ time + age + factor(sex)  + factor(ph.ecog) + ph.karno + pat.karno + meal.cal + wt.loss | status, data=data)
+label(data$time) <- "Survival Time"
+label(data$age) <- "Age"
+label(data$sex) <- "Sex"
+label(data$ph.ecog) <- "ECOG Performance Score"
+label(data$ph.karno) <- "Karnofsky Performance Score(by physician)"
+label(data$pat.karno) <- "Karnofsky Performance Score(by patients)"
+label(data$meal.cal) <- "Calories Consumed"
+label(data$wt.loss) <- "Weight Loss"
+
+units(data$time)<-"days"
+units(data$meal.cal)<-"kcals"
+units(data$wt.loss)<-"pounds"
+
+table1(~ time + age + sex + ph.ecog + ph.karno + pat.karno + meal.cal + wt.loss | status, data=data, overall="Total")
 ```
-
-
-Variable *time* records survival time in days. From the table, we can see that average survival time for censored and dead patients is 363 days and 283 days, respectively.
 
 ## Reference
 Loprinzi CL. Laurie JA. Wieand HS. Krook JE. Novotny PJ. Kugler JW. Bartel J. Law M. Bateman M. Klatt NE. et al. Prospective evaluation of prognostic variables from patient-completed questionnaires. North Central Cancer Treatment Group. _Journal of Clinical Oncology_. 12(3):601-7, 1994.
+
+## Things need to be discussed.
+Karnofsky Score - catogorical variables, can be classify into 3 levels to make table shorter. 
+
+0-40: unable to care for self
+
+50-70: unable to work
+
+80-100: able to carry on normal activity and to work.
