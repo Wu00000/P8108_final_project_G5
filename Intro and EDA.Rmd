@@ -1,0 +1,50 @@
+---
+title: "Intro and EDA"
+author: "Xueqing Huang(xh2470)"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+We are going to conduct a survival analysis by using lung cancer dataset in ‘survival’ package in R. The data describes survival of patients with advanced lung cancer from the North Central Cancer Treatment Group, as well as measures of the patients performance assessed either by the physician and by the patients themselves. This project aims to find if the nutritional factors such as caloric intake, will bring significant differences to the survival rate among patients with advanced lung cancer. The association between both the physician’s assessments of performance status (PS) as well as the patient’s assessment of their own performance status and the survival rate are also evaluated.
+
+## Exploratory Data Analysis(EDA)
+
+The dataset contains a total of 228 patients and 10 variables. A brief description of variables in the dataset is shown below.
+
+* inst:	Institution code
+* time:	Survival time in days
+* status:	Censoring status(1=censored, 2=dead)
+* age:	Age in years
+* sex:	Male=1, Female=2
+* ph.ecog:	ECOG performance score (0=good 5=dead)
+* ph.karno:	Karnofsky performance score (from bad=0 to good=100) rated by physician
+* pat.karno:	Karnofsky performance score as rated by patient
+* meal.cal:	Calories consumed at meals
+* wt.loss:	Weight loss in last six months
+
+Survival endpoint is the death of patients. The type of censoring is right censoring, which means patients left the study before their death. Among 228 patients, 63 of them are right censored and the number of events is 165. We group the patients by their survival status and provides the descriptive statistics of other variables. 
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(survival)
+library(table1)
+
+data <- lung
+
+data$status <- factor(data$status,
+                      levels=c(1,2),
+                      labels = c("Alive", "Death"))
+
+table1(~ time + age + factor(sex)  + factor(ph.ecog) + ph.karno + pat.karno + meal.cal + wt.loss | status, data=data)
+```
+
+
+Variable *time* records survival time in days. From the table, we can see that average survival time for censored and dead patients is 363 days and 283 days, respectively.
+
+## Reference
+Loprinzi CL. Laurie JA. Wieand HS. Krook JE. Novotny PJ. Kugler JW. Bartel J. Law M. Bateman M. Klatt NE. et al. Prospective evaluation of prognostic variables from patient-completed questionnaires. North Central Cancer Treatment Group. _Journal of Clinical Oncology_. 12(3):601-7, 1994.
