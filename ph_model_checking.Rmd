@@ -1,0 +1,10 @@
+---
+title: "PH model checking"
+output: pdf_document
+date: "2022-11-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
