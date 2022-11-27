@@ -4,7 +4,87 @@ output: pdf_document
 date: "2022-11-27"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include = FALSE, warning = FALSE, message = FALSE}
+library(survival)
+library(tidyverse)
+library(survminer)
+library(ggfortify)
+library(StepReg)
+
+knitr::opts_chunk$set(
+  warning = FALSE,
+  echo = TRUE)
 ```
+
+
+## Import data
+```{r}
+dat_lung_raw <- survival::lung
+dat_lung <- dat_lung_raw %>% 
+  mutate_at(c(1, 3, 5, 6), .funs = ~as.factor(.))
+```
+
+
+## Model checking I
+```{r}
+# --- sex ---
+# km plot
+fit_km_sex <- survfit(Surv(time, status == 2) ~ sex, dat_lung)
+autoplot(fit_km_sex) + theme_bw() +
+  labs(x = "Time (days)", y = "Survival Function",
+       title = "Kaplan-Meier Survival Estimate")
+
+# loglog vs. time
+ggsurvplot(fit_km_sex, fun = "cloglog", xlim = c(5, 1500),
+           xlab = "Time (days)",
+           title = "Log of Negative Log of Estimated Survival Functions")
+
+# observed vs. fitted
+fit_ph_sex <- coxph(Surv(time, status == 2) ~ sex, dat_lung)
+
+plot(fit_km_sex, col = c("blue", "darkgreen"),
+     xlab = "Time (days)", ylab = "Survival Function",
+     main = "Observed vs. Fitted")
+lines(survfit(fit_ph_sex, newdata = data.frame(sex = as.factor(1))), # male
+      col = "red", conf.int = FALSE)
+lines(survfit(fit_ph_sex, newdata = data.frame(sex = as.factor(2))), # female
+      col = "black", conf.int = FALSE)
+legend("bottomleft", legend = c("Observed Male", "Observed Female",
+                                "Fitted Male", "Fitted Female"), 
+       col = c("blue", "darkgreen", "red", "black"), lty = 1, cex = .8)
+```
+
+**Interpretation:** The above two figures demonstrate the proportional hazards assumption is hold given there is only one indicator variable `sex` in the model.
+
+## Model checking II
+```{r}
+# --- to be updated ---
+# stepwise selection
+stepw_res <- StepReg::stepwiseCox(Surv(time, status == 2) ~., dat_lung %>% na.omit(), 
+                                  selection = "bidirection", select = "AIC")
+stepw_res
+
+# interaction
+fit_ph_1 <- coxph(Surv(time, status == 2) ~ sex + wt.loss + ph.karno +
+                    sex * log(time) + wt.loss * log(time) + ph.karno * log(time), 
+                  dat_lung %>% na.omit())
+summary(fit_ph_1)
+
+# residual
+fit_ph_2 <- coxph(Surv(time, status == 2) ~ sex + wt.loss + ph.karno, dat_lung %>% na.omit())
+test_ph <- cox.zph(fit_ph_2)
+test_ph
+
+ggcoxzph(test_ph, ggtheme = theme_bw())
+```
+
+**Description and Interpretation:**  
+
+* Stepwise procedure was performed to select variables from the original dataset and finalize **4** variables including `r stepw_res$Variables`;  
+* Test interaction for proportionality given **3** selected variables `r stepw_res$Variables[2:4]`, the final result shows that only the interaction of `ph.karno` with `log(time)` is non-significant (i.e., greater than 0.05). So we conclude that the proportionality assumption for `ph.karno` is violated. The Schoenfeld residual of the fitted model agrees with such conclusion.
+
+
+## Time-varying model
+Ways to fit a time-varying model...
+
 
