@@ -12,14 +12,14 @@ library(flexsurv)
 theme_set(theme_minimal())
 ```
 
-```{r}
+```{r, echo=FALSE}
 lung_df = lung %>% 
   mutate_at(c(1, 3, 5, 6), .funs = ~as.factor(.))
 ```
 
 ## Model Checking
 
-Plot $-log\hat{S}(t)$
+### Plot $-log\hat{S}(t)$
 
 ```{r}
 lung_fit = survfit(Surv(time, status == 2) ~ sex, 
@@ -34,7 +34,7 @@ legend("topleft", legend = c("Male", "Female"),
 
 The curve for males is close to a straight line, while the curve for females is obviously non-linear, indicating a better choice of the Weibull distribution.
 
-Plot $log(-logS(t))$
+### Plot $log(-logS(t))$
 
 ```{r, fig.height=5}
 x_tick = c(5, 10, 20, 50, 100, 200, 500, 1000)
@@ -74,7 +74,7 @@ plot(fit_web,
      lwd = 2, lwd.obs = 1, 
      col = c("blue", "red"), col.obs = c("skyblue", "pink"),
      xlab = "Days", ylab = "Survival Probability", 
-     main = "KM and Parametric Est with 95% CI")
+     main = "KM and Parametric Est")
 plot(fit_exp, add = TRUE, 
      lwd = 2, col = c("blue4", "brown4"), lty = "longdash")
 legend("topright", legend = c("Obs M", "Obs F", "Exp M", "Exp F", "Web M", "Web F"), 
