@@ -1,0 +1,70 @@
+---
+title: "Lifetable, KM, FH"
+author: "Hening Cui"
+date: "11/27/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+library(survival)
+library(tidyverse)
+library(ggplot2)
+library(ggfortify)
+library(bshazard)
+library(survminer)
+library(biostat3)
+```
+## Lifetable
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+data = lung %>% 
+  drop_na()
+```
+
+male
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+lifetable1=lifetab2(Surv(time, status==2) ~ 1, data[data$sex==1,], breaks = seq(0, 1200, by = 100))
+print(lifetable1)
+```
+\newpage
+female
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+lifetable2=lifetab2(Surv(time, status==2) ~ 1, data[data$sex==2,], breaks = seq(0, 1200, by = 100))
+print(lifetable2)
+```
+
+
+## KM and FH 
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+lung.fit <- data%>%
+  survfit(Surv(time, status==2) ~ sex, data = .)
+
+lung.fit2 <- data %>%
+  survfit(Surv(time, status==2) ~ sex, data = ., type = "fleming")
+
+splots <- list()
+
+splots[[1]] <- ggsurvplot(lung.fit, data = lung, pval = TRUE, title = "Kaplan-Meier")
+splots[[2]] <- ggsurvplot(lung.fit2, data = lung, pval = TRUE, title = "Fleming-Harrington")
+
+arrange_ggsurvplots(splots, print = TRUE,
+  ncol = 2, nrow = 1)
+```
+
+
+
+```{r}
+plot(lung.fit, conf.int = FALSE, col = "blue",
+     xlab = "Time (Days)", ylab = "Estimated Survival Probability",
+     main = "Comparison of S(t) between K-M and F-H methods")
+lines(lung.fit2, conf.int = FALSE, col = "red")
+legend("topright", c("Kaplan-Meier", "Fleming-Harrington"),
+       col = c("blue", "red"), lty = 1, bty = "n")
+```
+
+
+
