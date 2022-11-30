@@ -57,7 +57,7 @@ legend("bottomleft", legend = c("Observed Male", "Observed Female",
 **Interpretation:** The above two figures demonstrate the proportional hazards assumption is hold given there is only one indicator variable `sex` in the model.
 
 ## Model checking II
-```{r}
+```{r, fig.dim = c(10, 12)}
 # --- to be updated ---
 # stepwise selection
 stepw_res <- StepReg::stepwiseCox(Surv(time, status == 2) ~., dat_lung %>% na.omit(), 
