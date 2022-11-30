@@ -29,7 +29,7 @@ Use plots to check if the lung data, by sex, follows the exponential distributio
 
 ### Plot $-log\hat{S}(t)$
 
-```{r}
+```{r, fig.width=5, fig.height=5, fig.align='center'}
 lung_fit = survfit(Surv(time, status == 2) ~ sex, 
                    data = lung_df)
 
@@ -44,7 +44,7 @@ The curve for males is close to a straight line, while the curve for females is 
 
 ### Plot $log(-logS(t))$
 
-```{r, fig.height=5}
+```{r, fig.width=5, fig.height=5, fig.align='center'}
 x_tick = c(5, 10, 20, 50, 100, 200, 500, 1000)
 log_x = round(log(x_tick), 1)
 
@@ -72,7 +72,10 @@ fit_weib_f = flexsurvreg(Surv(time, status == 2) ~ 1,
                          data = subset(lung_df, sex == 2), dist = "weibull")
 
 #plot km, exp fitted and weib fitted
-plot(fit_exp_m, conf.int = FALSE, ci = FALSE, col = "red", col.obs = "pink", lty = "longdash", xlim = c(0,1000))
+plot(fit_exp_m, conf.int = FALSE, ci = FALSE, col = "red", col.obs = "pink", 
+     lty = "longdash", xlim = c(0,1000),
+     xlab = "Days", ylab = "Survival Probability",
+     main = "KM and Parametric Est")
 par(new = TRUE)
 plot(fit_exp_f, conf.int = FALSE, ci = FALSE, col = "blue", col.obs = "skyblue", lty = "longdash", xlim = c(0,1000), xaxt = "n")
 plot(fit_weib_m, add = TRUE, ci = FALSE, col = "brown4")
@@ -120,7 +123,7 @@ summary(fit_ph5)
 ```
 
 
-```{r, fig.height=5}
+```{r, fig.height=5, fig.width=6, fig.align='center'}
 #final model
 fit_ph6 = phreg(Surv(time, status == 2) ~ sex + ph.ecog,
                 data = lung_df2, dist = "weibull")
