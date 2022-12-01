@@ -1,7 +1,8 @@
 ---
 title: "PH model checking"
+author: "Qihang Wu"
+date: "`r format(Sys.Date(), '%Y-%B-%d')`"
 output: pdf_document
-date: "2022-11-27"
 ---
 
 ```{r setup, include = FALSE, warning = FALSE, message = FALSE}
@@ -17,16 +18,13 @@ knitr::opts_chunk$set(
 ```
 
 
-## Import data
+## Model checking I (graphical methods)
 ```{r}
+# import data
 dat_lung_raw <- survival::lung
 dat_lung <- dat_lung_raw %>% 
-  mutate_at(c(1, 3, 5, 6), .funs = ~as.factor(.))
-```
+  mutate_at(c(1, 3, 5, 6), .funs = ~as.factor(.)) %>% na.omit()
 
-
-## Model checking I
-```{r}
 # --- sex ---
 # km plot
 fit_km_sex <- survfit(Surv(time, status == 2) ~ sex, dat_lung)
@@ -34,14 +32,17 @@ autoplot(fit_km_sex) + theme_bw() +
   labs(x = "Time (days)", y = "Survival Function",
        title = "Kaplan-Meier Survival Estimate")
 
-# loglog vs. time
+# loglog vs. log time
 ggsurvplot(fit_km_sex, fun = "cloglog", xlim = c(5, 1500),
-           xlab = "Time (days)",
-           title = "Log of Negative Log of Estimated Survival Functions")
+           xlab = "Time (days in log scale)",
+           title = "Log of Negative Log of Estimated Survival Functions",
+           legend.labs = c("Male", "Female"))
+# ggsave("ph_checking_1.png", width = 10, height = 8)
 
 # observed vs. fitted
 fit_ph_sex <- coxph(Surv(time, status == 2) ~ sex, dat_lung)
 
+# png("ph_checking_2.png", width = 500, height = 400)
 plot(fit_km_sex, col = c("blue", "darkgreen"),
      xlab = "Time (days)", ylab = "Survival Function",
      main = "Observed vs. Fitted")
