@@ -62,31 +62,23 @@ legend("topright", legend = c("Observed Male", "Observed Female",
 ```{r, fig.dim = c(10, 12)}
 # --- to be updated ---
 # stepwise selection
-stepw_res <- StepReg::stepwiseCox(Surv(time, status == 2) ~., dat_lung %>% na.omit(), 
-                                  selection = "bidirection", select = "AIC")
-stepw_res
+StepReg::stepwiseCox(Surv(time, status == 2) ~., dat_lung, 
+                     selection = "bidirection", select = "AIC")
 
 # interaction
-fit_ph_1 <- coxph(Surv(time, status == 2) ~ sex + wt.loss + ph.karno +
-                    sex * log(time) + wt.loss * log(time) + ph.karno * log(time), 
-                  dat_lung %>% na.omit())
+fit_ph_1 <- coxph(Surv(time, status == 2) ~ sex + meal.cal + wt.loss +
+                    sex * time + meal.cal * time + wt.loss * time, 
+                  dat_lung)
 summary(fit_ph_1)
 
 # residual
-fit_ph_2 <- coxph(Surv(time, status == 2) ~ sex + wt.loss + ph.karno, dat_lung %>% na.omit())
+fit_ph_2 <- coxph(Surv(time, status == 2) ~ sex + meal.cal + wt.loss, dat_lung)
 test_ph <- cox.zph(fit_ph_2)
-test_ph
-
-ggcoxzph(test_ph, ggtheme = theme_bw())
+ggcoxzph(test_ph[1], ggtheme = theme_classic())
+# ggsave("ph_checking_3.png", width = 6, height = 4)
+ggcoxzph(test_ph[2], ggtheme = theme_classic())
+# ggsave("ph_checking_4.png", width = 6, height = 4)
+ggcoxzph(test_ph[3], ggtheme = theme_classic())
 ```
-
-**Description and Interpretation:**  
-
-* Stepwise procedure was performed to select variables from the original dataset and finalize **4** variables including `r stepw_res$Variables`;  
-* Test interaction for proportionality given **3** selected variables `r stepw_res$Variables[2:4]`, the final result shows that only the interaction of `ph.karno` with `log(time)` is non-significant (i.e., greater than 0.05). So we conclude that the proportionality assumption for `ph.karno` is violated. The Schoenfeld residual of the fitted model agrees with such conclusion.
-
-
-## Time-varying model
-Ways to fit a time-varying model...
 
 
