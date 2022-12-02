@@ -33,11 +33,12 @@ autoplot(fit_km_sex) + theme_bw() +
        title = "Kaplan-Meier Survival Estimate")
 
 # loglog vs. log time
-ggsurvplot(fit_km_sex, fun = "cloglog", xlim = c(5, 1500),
-           xlab = "Time (days in log scale)",
-           title = "Log of Negative Log of Estimated Survival Functions",
-           legend.labs = c("Male", "Female"))
-# ggsave("ph_checking_1.png", width = 10, height = 8)
+# png("ph_checking_1.png", width = 500, height = 400)
+plot(fit_km_sex, fun = "cloglog", col = c("black", "red"),
+     xlab = "Time (days in log scale)", ylab = "log{-log(S(t))}",
+     main = "Log of Negative Log of Estimated Survival Functions")
+legend("topleft", legend = c("Male", "Female"), col = c("black", "red"), 
+       lty = 1, cex = 1)
 
 # observed vs. fitted
 fit_ph_sex <- coxph(Surv(time, status == 2) ~ sex, dat_lung)
@@ -50,9 +51,9 @@ lines(survfit(fit_ph_sex, newdata = data.frame(sex = as.factor(1))), # male
       col = "red", conf.int = FALSE)
 lines(survfit(fit_ph_sex, newdata = data.frame(sex = as.factor(2))), # female
       col = "black", conf.int = FALSE)
-legend("bottomleft", legend = c("Observed Male", "Observed Female",
+legend("topright", legend = c("Observed Male", "Observed Female",
                                 "Fitted Male", "Fitted Female"), 
-       col = c("blue", "darkgreen", "red", "black"), lty = 1, cex = .8)
+       col = c("blue", "darkgreen", "red", "black"), lty = 1, cex = 1)
 ```
 
 **Interpretation:** The above two figures demonstrate the proportional hazards assumption is hold given there is only one indicator variable `sex` in the model.
