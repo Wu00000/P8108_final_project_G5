@@ -92,6 +92,54 @@ From the table we can see that there are some missing values in this dataset. Fo
 
 ### Non-parametric Estimate
 
+Lifetable
+
+The lifetable was constructed using standard life table methodology.[2] Table 1 represents the lifetable with the time break of 100 days stratified by sex.The full table was in supplementary material. Based on the lifetable, the 50\% survival time of male is between 285 to 286 days versus 433-434 for female. Male has lower survival time than female based on lifetable. The hypothesis need future testify in the following modeling fitting.
+
+<center>
+
+![Table 1-1 Lifetable(male)](lifetablemale.png)
+</center>
+
+<center>
+
+![Table 1-2 Lifetable(female)](lifetablefemale.png)
+
+</center>
+
+Kaplan-Meier and Fleming-Harrington model
+
+For nonparametric estimator, Kaplan-Meier(KM) model and Fleming-Harrington(FH) model were used to measure the fraction of subjects living for a certain amount of time after treatment with the stratify of sex.[3]
+
+The Kaplan-Meier estimator
+
+$$ 
+\hat S_K(t)= \begin{cases}
+1 & \text { if } t< t_1  \\ 
+\prod_{t_i \le t} [1-\frac{d_i}{n_i}] & \text { if }   t \ge t_1
+\end{cases}
+$$
+
+note: $d_i = \# \ of\ failure \ at \ time\ t_i$, $n_i = \#\ at\ risk \ at \  t_i^-$,  $c_i = \# \ censored\ during\ the\ interval\ [t_i, t_{i+1}]$
+
+The Fleming-Harrington estimator
+
+$$ 
+\hat S_F(t)= \begin{cases}
+1 & \text { if } t< t_1  \\ 
+\prod_{t_i \le t} exp[-\frac{d_i}{n_i}] & \text { if }   t \ge t_1
+\end{cases}
+$$
+Both the KM estimator and the FH estimator have P-values that are lower than 0.05. We have 95\% confidence that there are differences between the survival curves over the male and female. According to the following graph(Figure 1), male have a lesser chance of living through the 3 years than female. The difference between sex is more significant in the early time point than the later time point. 
+
+<center>
+
+![Kaplan-Meier model and Fleming -Harrington model (sex=1(male), sex=2(female))](KMFH.png)
+
+The KM and FH model have similar trend with no significant difference. FH has slight higher estimator in the late time point than KM estimator. (Figure 2).
+
+
+
 ### Hypothesis Testing
 
 ### Semi-parametric Model (PH model)
@@ -107,3 +155,8 @@ From the table we can see that there are some missing values in this dataset. Fo
 ## Reference
 
 [1] Loprinzi CL. Laurie JA. Wieand HS. Krook JE. Novotny PJ. Kugler JW. Bartel J. Law M. Bateman M. Klatt NE. et al. Prospective evaluation of prognostic variables from patient-completed questionnaires. North Central Cancer Treatment Group. _Journal of Clinical Oncology_. 12(3):601-7, 1994.
+
+[2] Preston SH, Heuveline P, Guillot M. Demography: measuring and modeling population processes. Blackwell Publishers, 2001.
+
+
+[3] Goel, M. K., Khanna, P., & Kishore, J. (2010). Understanding survival analysis: Kaplan-Meier estimate. International journal of Ayurveda research, 1(4), 274.
