@@ -1,10 +1,109 @@
 ---
-title: "Final report"
+title: |
+  | Final Report of Group 5
+  | Survival Analysis of Patients with Lung Cancer
+author: "Chloe Jian, Hening Cui, Jibei Zheng, Pengchen Wang, Xueqing Huang, Qihang Wu"
 output: pdf_document
-date: "2022-11-20"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Introduction
+
+Lung cancer is a disease with a very high prevalence. Prognostic factors provide important information for patients with cancer. A better understanding of patients’ prognosis can help in making appropriate therapeutic decisions[1]. Driven by the desire to improve life quality of lung cancer patients, we perform a survival analysis of these patients and analyze factors that affect survival time.
+
+The dataset we use is the lung cancer dataset in ‘survival’ package in R. The data describes survival of patients with advanced lung cancer from the North Central Cancer Treatment Group, as well as measures of the patients performance assessed either by the physician and by the patients themselves[1]. Our project aims to explore whether factors such as age, sex, and caloric intake, will bring significant differences in the survival rate of patients with advanced lung cancer. The association between both the physician’s assessments of performance status as well as the patient’s assessment of their own performance status and the survival rate are also evaluated.
+
+Methods we use in this project include exploratory data analysis, non-parametric estimate, hypothesis testing, semi-parametric model and parametric models. Details of those methods are given below.
+
+## Methods
+
+### Exploratory Data Analysis
+
+The dataset contains a total of 228 patients and 10 variables. A brief description of variables in the dataset is shown below.
+
+* inst:	Institution code
+* time:	Survival time in days
+* status:	Censoring status(1=censored, 2=dead)
+* age:	Age in years
+* sex:	Male=1, Female=2
+* ph.ecog:	ECOG performance score (0=good 5=dead)
+* ph.karno:	Karnofsky performance score (from bad=0 to good=100) rated by physician
+* pat.karno:	Karnofsky performance score as rated by patient
+* meal.cal:	Calories consumed at meals
+* wt.loss:	Weight loss in last six months
+
+Survival endpoint is the death of patients. The type of censoring is right censoring, which means patients left the study before their death. Among 228 patients, 63 of them were right censored and the number of events was 165. We group the patients by their survival status and provide the descriptive statistics of other variables. Wilcoxon rank sum test, Pearson's Chi-squared test, and Fisher's exact test were used to compare values across group. 
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(survival)
+library(gtsummary)
+
+data <- lung
+
+
+data$status <- factor(data$status,
+                      levels=c(1,2),
+                      labels = c("Alive", "Death"))
+data$sex <- factor(data$sex,
+                   levels=c(1,2),
+                   labels = c("Male", "Female"))
+data$ph.ecog <- factor(data$ph.ecog,
+                       levels=c(0,1,2,3,4),
+                       labels = c("Asymptomatic", 
+                                  "Symptomatic but completely ambulatory",
+                                  "In bed <50% of the day",
+                                  "In bed > 50% of the day but not bedbound",
+                                  "Bedbound"))
+data$ph.karno <- factor(data$ph.karno,
+                       levels=c(50,60,70,80,90,100))
+data$pat.karno <- factor(data$pat.karno,
+                         levels=c(30,40,50,60,70,80,90,100))
+
+
+
+data %>% 
+  select(-1) %>%
+  tbl_summary(by = status,
+              statistic = list(all_continuous() ~ "{mean} ({sd})",
+                               all_categorical() ~  "{n} ({p}%)"),
+              label = list(time ~ "Survival Time (days)", 
+                           age~"Age",
+                           sex~"Sex",
+                           ph.ecog~ "ECOG Score",
+                           ph.karno~"Karnofsky Score(by physician)",
+                           pat.karno~"Karnofsky Score(by patients)",
+                           meal.cal~"Calories Consumed (kcals)",
+                           wt.loss~"Weight Loss (pounds)"),
+              missing_text = "Missing") %>% 
+  add_p(test.args = pat.karno ~ list(workspace=2e9)) %>%
+  add_overall() %>%
+  modify_header(label ~ "**Variable**") %>%
+  modify_caption("**Patient Characteristics**") %>%
+  bold_labels()
+```
+
+From the table, we can see that average survival time for censored and dead patients is 363 days and 283 days, respectively. From the p values, we can see that for patients who were alive and dead, the survival time, sex proportion, ECOG performance score and Karnofsky performance score rated by patient are significantly different. However, there are no significant differences in age, Karnofsky performance score rated by physician, calories consumed, and weight loss.
+
+From the table we can see that there are some missing values in this dataset. For simplicity, we removed those missing data for the following analysis.
+
+### Non-parametric Estimate
+
+### Hypothesis Testing
+
+### Semi-parametric Model (PH model)
+#### Variable Selection and Stratification
+#### Model Checking
+
+### Parametric Models
+
+## Conclusion
+
+## Discussion
+
+## Reference
+
+[1] Loprinzi CL. Laurie JA. Wieand HS. Krook JE. Novotny PJ. Kugler JW. Bartel J. Law M. Bateman M. Klatt NE. et al. Prospective evaluation of prognostic variables from patient-completed questionnaires. North Central Cancer Treatment Group. _Journal of Clinical Oncology_. 12(3):601-7, 1994.

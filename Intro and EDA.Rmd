@@ -10,9 +10,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-We are going to conduct a survival analysis by using lung cancer dataset in ‘survival’ package in R. The data describes survival of patients with advanced lung cancer from the North Central Cancer Treatment Group, as well as measures of the patients performance assessed either by the physician and by the patients themselves. This project aims to find if the nutritional factors such as caloric intake, will bring significant differences to the survival rate among patients with advanced lung cancer. The association between both the physician’s assessments of performance status (PS) as well as the patient’s assessment of their own performance status and the survival rate are also evaluated.
+Lung cancer is a disease with a very high prevalence. Prognostic factors provide important information for patients with cancer. A better understanding of patients’ prognosis can help in making appropriate therapeutic decisions[1]. Driven by the desire to improve life quality of lung cancer patients, we perform a survival analysis of these patients and analyze factors that affect survival time.
 
-## Exploratory Data Analysis(EDA)
+The dataset we use is the lung cancer dataset in ‘survival’ package in R. The data describes survival of patients with advanced lung cancer from the North Central Cancer Treatment Group, as well as measures of the patients performance assessed either by the physician and by the patients themselves[1]. Our project aims to explore whether factors such as age, sex, and caloric intake, will bring significant differences in the survival rate of patients with advanced lung cancer. The association between both the physician’s assessments of performance status as well as the patient’s assessment of their own performance status and the survival rate are also evaluated.
+
+Methods we use in this project include exploratory data analysis, non-parametric estimate, hypothesis testing, semi-parametric model and parametric models. Details of those methods are given below.
+
+## Methods
+
+### Exploratory Data Analysis
 
 The dataset contains a total of 228 patients and 10 variables. A brief description of variables in the dataset is shown below.
 
@@ -27,15 +33,15 @@ The dataset contains a total of 228 patients and 10 variables. A brief descripti
 * meal.cal:	Calories consumed at meals
 * wt.loss:	Weight loss in last six months
 
-Survival endpoint is the death of patients. The type of censoring is right censoring, which means patients left the study before their death. Among 228 patients, 63 of them are right censored and the number of events is 165. We group the patients by their survival status and provide the descriptive statistics of other variables. From the table, we can see that average survival time for censored and dead patients is 363 days and 283 days, respectively. Generally speaking, patients who alive were younger than patients who died, and female had higher chance of survival than female.
+Survival endpoint is the death of patients. The type of censoring is right censoring, which means patients left the study before their death. Among 228 patients, 63 of them were right censored and the number of events was 165. We group the patients by their survival status and provide the descriptive statistics of other variables. Wilcoxon rank sum test, Pearson's Chi-squared test, and Fisher's exact test were used to compare values across group. 
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 library(tidyverse)
 library(survival)
-library(table1)
-library(kableExtra)
+library(gtsummary)
 
 data <- lung
+
 
 data$status <- factor(data$status,
                       levels=c(1,2),
@@ -50,35 +56,42 @@ data$ph.ecog <- factor(data$ph.ecog,
                                   "In bed <50% of the day",
                                   "In bed > 50% of the day but not bedbound",
                                   "Bedbound"))
-data$ph.karno <- factor(data$ph.karno)
-      #                  levels=c(0,10,20,30,40,50,60,70,80,90,100))
-data$pat.karno <- factor(data$pat.karno)
-       #                  levels=c(0,10,20,30,40,50,60,70,80,90,100))
+data$ph.karno <- factor(data$ph.karno,
+                       levels=c(50,60,70,80,90,100))
+data$pat.karno <- factor(data$pat.karno,
+                         levels=c(30,40,50,60,70,80,90,100))
 
-label(data$time) <- "Survival Time"
-label(data$age) <- "Age"
-label(data$sex) <- "Sex"
-label(data$ph.ecog) <- "ECOG Performance Score"
-label(data$ph.karno) <- "Karnofsky Performance Score(by physician)"
-label(data$pat.karno) <- "Karnofsky Performance Score(by patients)"
-label(data$meal.cal) <- "Calories Consumed"
-label(data$wt.loss) <- "Weight Loss"
 
-units(data$time)<-"days"
-units(data$meal.cal)<-"kcals"
-units(data$wt.loss)<-"pounds"
 
-table1(~ time + age + sex + ph.ecog + ph.karno + pat.karno + meal.cal + wt.loss | status, data=data, overall="Total")
+data %>% 
+  select(-1) %>%
+  tbl_summary(by = status,
+              statistic = list(all_continuous() ~ "{mean} ({sd})",
+                               all_categorical() ~  "{n} ({p}%)"),
+              label = list(time ~ "Survival Time (days)", 
+                           age~"Age",
+                           sex~"Sex",
+                           ph.ecog~ "ECOG Score",
+                           ph.karno~"Karnofsky Score(by physician)",
+                           pat.karno~"Karnofsky Score(by patients)",
+                           meal.cal~"Calories Consumed (kcals)",
+                           wt.loss~"Weight Loss (pounds)"),
+              missing_text = "Missing") %>% 
+  add_p(test.args = pat.karno ~ list(workspace=2e9)) %>%
+  add_overall() %>%
+  modify_header(label ~ "**Variable**") %>%
+  modify_caption("**Patient Characteristics**") %>%
+  bold_labels()
 ```
 
+From the table, we can see that average survival time for censored and dead patients is 363 days and 283 days, respectively. From the p values, we can see that for patients who were alive and dead, the survival time, sex proportion, ECOG performance score and Karnofsky performance score rated by patient are significantly different. However, there are no significant differences in age, Karnofsky performance score rated by physician, calories consumed, and weight loss.
+
+From the table we can see that there are some missing values in this dataset. For simplicity, we removed those missing data for the following analysis.
+
+## Conclusion
+
+## Discussion
+
 ## Reference
-Loprinzi CL. Laurie JA. Wieand HS. Krook JE. Novotny PJ. Kugler JW. Bartel J. Law M. Bateman M. Klatt NE. et al. Prospective evaluation of prognostic variables from patient-completed questionnaires. North Central Cancer Treatment Group. _Journal of Clinical Oncology_. 12(3):601-7, 1994.
 
-## Things need to be discussed.
-Karnofsky Score - catogorical variables, can be classify into 3 levels to make table shorter. 
-
-0-40: unable to care for self
-
-50-70: unable to work
-
-80-100: able to carry on normal activity and to work.
+[1] Loprinzi CL. Laurie JA. Wieand HS. Krook JE. Novotny PJ. Kugler JW. Bartel J. Law M. Bateman M. Klatt NE. et al. Prospective evaluation of prognostic variables from patient-completed questionnaires. North Central Cancer Treatment Group. _Journal of Clinical Oncology_. 12(3):601-7, 1994.
