@@ -210,6 +210,8 @@ From the above figures, the p values for both variables `sex` and `wt.loss` are 
 ## Discussion
 
 
+
+
 ## Reference
 
 [1] Loprinzi CL. Laurie JA. Wieand HS. Krook JE. Novotny PJ. Kugler JW. Bartel J. Law M. Bateman M. Klatt NE. et al. Prospective evaluation of prognostic variables from patient-completed questionnaires. North Central Cancer Treatment Group. _Journal of Clinical Oncology_. 12(3):601-7, 1994.
@@ -218,3 +220,7 @@ From the above figures, the p values for both variables `sex` and `wt.loss` are 
 
 
 [3] Goel, M. K., Khanna, P., & Kishore, J. (2010). Understanding survival analysis: Kaplan-Meier estimate. International journal of Ayurveda research, 1(4), 274.
+
+
+## Appendix
+For codes please click [$\textcolor{blue}{here}$](https://github.com/Wu00000/P8108_final_project_G5.git).
