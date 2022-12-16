@@ -86,14 +86,15 @@ data %>%
                            meal.cal~"Calories Consumed (kcals)",
                            wt.loss~"Weight Loss (pounds)"),
               missing_text = "Missing") %>% 
-  add_p(test.args = pat.karno ~ list(workspace=2e9)) %>%
+  add_p(list(all_categorical() ~ "fisher.test"),
+    test.args = pat.karno ~ list(workspace=2e9)) %>%
   add_overall() %>%
   modify_header(label ~ "**Variable**") %>%
   modify_caption("**Patient Characteristics**") %>%
   bold_labels()
 ```
 
-From the table, we can see that average survival time for censored and dead patients is 363 days and 283 days, respectively. From the p values, we can see that for patients who were alive and dead, the survival time, sex proportion, ECOG performance score and Karnofsky performance score rated by patient are significantly different. However, there are no significant differences in age, Karnofsky performance score rated by physician, calories consumed, and weight loss.
+From the table, we can see that average survival time for censored and dead patients is 363 days and 283 days, respectively. From the p values, we can see that for patients who were alive and dead, the survival time, sex proportion, ECOG performance score and Karnofsky performance score rated by patient are significantly different. However, there are no significant differences in age, Karnofsky performance score rated by physician, calories consumed, and weight loss. (Note that the p values for all continuous variables are obtained from Wilcoxon rank sum tests while Fisher's exact tests for the categorical.)
 
 From the table we can see that there are some missing values in this dataset. For simplicity, we removed those missing data for the following analysis.
 
@@ -104,12 +105,12 @@ From the table we can see that there are some missing values in this dataset. Fo
 
 <center>
 
-![Table 1-1 Lifetable(male)](lifetablemale.png)
+![Table 1-1 Lifetable (male)](lifetablemale.png)
 </center>
 
 <center>
 
-![Table 1-2 Lifetable(female)](lifetablefemale.png)
+![Table 1-2 Lifetable (female)](lifetablefemale.png)
 
 </center>
 
@@ -138,7 +139,7 @@ Both the KM estimator and the FH estimator have P-values that are lower than 0.0
 
 <center>
 
-![Kaplan-Meier model and Fleming -Harrington model (sex=1(male), sex=2(female))](KMFH.png)
+![Kaplan-Meier model and Fleming -Harrington model (sex=1 (male), sex=2 (female))](KMFH.png)
 
 The KM and FH model have similar trend with no significant difference. FH has slight higher estimator in the late time point than KM estimator. (Figure 2).
 
