@@ -1,8 +1,8 @@
 ---
-title: |
-  | Final Report of Group 5
-  | Survival Analysis of Patients with Lung Cancer
-author: "Chloe Jian, Hening Cui, Jibei Zheng, Pengchen Wang, Xueqing Huang, Qihang Wu"
+title: "**Survival Analysis of Patients with Lung Cancer**"
+author: 
+  - "P8108 Final Project Group 5"
+  - "Chloe Jian, Hening Cui, Jibei Zheng, Pengchen Wang, Xueqing Huang, Qihang Wu"
 output: pdf_document
 ---
 
