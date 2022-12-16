@@ -166,6 +166,26 @@ plot(fit_km_sex, fun = "cloglog", col = c("black", "red"), xaxt = "none",
 axis(1, x_ticks, log_x)
 legend("topleft", legend = c("Male", "Female"), col = c("black", "red"),
        lty = 1, cex = 1)
+
+# observed vs. fitted
+fit_ph_sex <- coxph(Surv(time, status == 2) ~ sex, dat_lung)
+
+plot(fit_km_sex, col = c("blue", "darkgreen"),
+     xlab = "Time (Days)", ylab = "Survival Function",
+     main = "Observed vs. Fitted")
+lines(survfit(fit_ph_sex, newdata = data.frame(sex = as.factor(1))), # male
+      col = "red", conf.int = FALSE)
+lines(survfit(fit_ph_sex, newdata = data.frame(sex = as.factor(2))), # female
+      col = "black", conf.int = FALSE)
+legend("topright", legend = c("Observed Male", "Observed Female", "Fitted Male", "Fitted Female"),
+       col = c("blue", "darkgreen", "red", "black", lty = 1, cex = 1))
+```
+
+The above figures demonstrate that the proportional hazards assumption is hold given there is only one indicator variable `sex` in the model.
+
+```{r}
+# --- interaction & residuals ---
+
 ```
 
 
