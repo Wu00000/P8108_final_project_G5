@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
   warning = FALSE)
 ```
 
-## Introduction
+# Introduction
 
 Lung cancer is a disease with a very high prevalence. Prognostic factors provide important information for patients with cancer. A better understanding of patients’ prognosis can help in making appropriate therapeutic decisions[1]. Driven by the desire to improve life quality of lung cancer patients, we perform a survival analysis of these patients and analyze factors that affect survival time.
 
@@ -26,9 +26,9 @@ The dataset we use is the lung cancer dataset in ‘survival’ package in R. Th
 
 Methods we use in this project include exploratory data analysis, non-parametric estimate, hypothesis testing, semi-parametric model and parametric models. Details of those methods are given below.
 
-## Methods
+# Methods
 
-### Exploratory Data Analysis
+## Exploratory Data Analysis
 
 The dataset contains a total of 228 patients and 10 variables. A brief description of variables in the dataset is shown below.
 
@@ -95,7 +95,7 @@ From the table, we can see that average survival time for censored and dead pati
 From the table we can see that there are some missing values in this dataset. For simplicity, we removed those missing data for the following analysis.
 
 
-### Non-parametric Estimate
+## Non-parametric Estimate
 
 **Lifetable** The lifetable was constructed using standard life table methodology[2]. Table 1 represents the lifetable with the time break of 100 days stratified by sex.The full table was in supplementary material. Based on the lifetable, the 50\% survival time of male is between 285 to 286 days versus 433-434 for female. Male has lower survival time than female based on lifetable. The hypothesis need future testify in the following modeling fitting.
 
@@ -141,12 +141,20 @@ The KM and FH model have similar trend with no significant difference. FH has sl
 
 
 
-### Hypothesis Testing
+## Hypothesis Testing
 
 
-### Semi-parametric Model (PH model)
-#### Variable Selection and Stratification
-#### Model Checking
+## Semi-parametric Model (PH model)
+
+
+### Variable Selection and Stratification
+
+### Model Checking  
+
+The Cox proportional hazards model makes two major assumptions. One of them is that the hazard functions for the survival curves of different strata will be propotional over the period of time, while the other one is the relationship between the log of hazard $h(t)$ and every covariate will be linear.
+
+**Graphical Approach** One of the most popular strategies for PH assumption checking is to compare the survival curves visually. Recall for a PH model, $S(t|Z = z) = e^{-\int h_0(t)e^{\beta z}dt} = S_0(t)^{e^{\beta z}}$. By using a log-log transformation (i.e., $log\{-logS(t|Z = z)\}$), we will have $$log\{-log\hat{S}(t|Z = z)\} - log\{-log\hat{S}_0(t)\} = \beta,$$ where $Z$ is an indicator variable, e.g., sex. Such equation indicates two parallel curves if the proportional assumption holds.
+
 ```{r, fig.align='center'}
 # --- Graphical method ---
 # import data
@@ -184,6 +192,8 @@ legend("topright", legend = c("Observed Male", "Observed Female", "Fitted Male",
 
 The above figures demonstrate that the proportional hazards assumption is hold given there is only one indicator variable `sex` in the model.
 
+**Residuals & Interaction Test** XXX
+
 ```{r, results='hide', fig.dim=c(6, 8)}
 # --- residuals & interaction test ---
 # residuals
@@ -201,18 +211,18 @@ summary(fit_ph_2)
 From the above figures, the p values for both variables `sex` and `wt.loss` are greater than 0.05 except the variable `meal.cal`, which means that the proportional hazard assumptions is violated only for `meal.cal`. This result is not consistent with the interaction test where the assumption is retained for all three variables (P>0.05).
 
 
-### Parametric Models
+## Parametric Models
 
 
-## Conclusion
+# Conclusion
 
 
-## Discussion
+# Discussion
 
 
 
 
-## Reference
+# Reference
 
 [1] Loprinzi CL. Laurie JA. Wieand HS. Krook JE. Novotny PJ. Kugler JW. Bartel J. Law M. Bateman M. Klatt NE. et al. Prospective evaluation of prognostic variables from patient-completed questionnaires. North Central Cancer Treatment Group. _Journal of Clinical Oncology_. 12(3):601-7, 1994.
 
@@ -222,5 +232,5 @@ From the above figures, the p values for both variables `sex` and `wt.loss` are 
 [3] Goel, M. K., Khanna, P., & Kishore, J. (2010). Understanding survival analysis: Kaplan-Meier estimate. International journal of Ayurveda research, 1(4), 274.
 
 
-## Appendix
+# Appendix
 For codes please click [$\textcolor{blue}{here}$](https://github.com/Wu00000/P8108_final_project_G5.git).
