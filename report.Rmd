@@ -10,6 +10,7 @@ output: pdf_document
 library(tidyverse)
 library(survival)
 library(gtsummary)
+library(survminer)
 
 knitr::opts_chunk$set(
   echo = FALSE,
@@ -183,11 +184,21 @@ legend("topright", legend = c("Observed Male", "Observed Female", "Fitted Male",
 
 The above figures demonstrate that the proportional hazards assumption is hold given there is only one indicator variable `sex` in the model.
 
-```{r}
-# --- interaction & residuals ---
+```{r, results='hide', fig.dim=c(6, 8)}
+# --- residuals & interaction test ---
+# residuals
+fit_ph_1 <- coxph(Surv(time, status == 2) ~ sex + meal.cal + wt.loss, dat_lung)
+test_ph <- cox.zph(fit_ph_1)
+survminer::ggcoxzph(test_ph, ggtheme = theme_classic())
 
+# interaction
+fit_ph_2 <- coxph(Surv(time, status == 2) ~ sex + meal.cal + wt.loss +
+                    sex * time + meal.cal * time + wt.loss * time,
+                  dat_lung)
+summary(fit_ph_2)
 ```
 
+From the above figures, the p values for both variables `sex` and `wt.loss` are greater than 0.05 except the variable `meal.cal`, which means that the proportional hazard assumptions is violated only for `meal.cal`. This result is not consistent with the interaction test where the assumption is retained for all three variables (P>0.05).
 
 
 ### Parametric Models
