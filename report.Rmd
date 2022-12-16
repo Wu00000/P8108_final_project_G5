@@ -155,11 +155,13 @@ The KM and FH model have similar trend with no significant difference. FH has sl
 
 ### Model Checking  
 
-The Cox proportional hazards model makes two major assumptions. One of them is that the hazard functions for the survival curves of different strata will be propotional over the period of time, while the other one is the relationship between the log of hazard $h(t)$ and every covariate will be linear.
+The Cox proportional hazards (PH) model makes two major assumptions. One of them is that the hazard functions for the survival curves of different strata will be proportional over the period of time, while the other one is the relationship between the log of hazard $h(t)$ and every covariate will be linear. We omit the details for the latter assumption and focus on the first one in this project. Generally speaking, the proportional hazards assumption is significant for the interpretation and the use of PH model. The following describes some graphical analysis methods in conjunction with the interaction test and residuals checking.
 
-**Graphical Approach** One of the most popular strategies for PH assumption checking is to compare the survival curves visually. Recall for a PH model, $S(t|Z = z) = e^{-\int h_0(t)e^{\beta z}dt} = S_0(t)^{e^{\beta z}}$. By using a log-log transformation (i.e., $log\{-logS(t|Z = z)\}$), we will have $$log\{-log\hat{S}(t|Z = z)\} - log\{-log\hat{S}_0(t)\} = \beta,$$ where $Z$ is an indicator variable, e.g., sex. Such equation indicates two parallel curves if the proportional assumption holds.
+**Graphical Approach** One of the most popular strategies for PH assumption checking is to compare the survival curves visually. Recall for a PH model, $S(t|Z = z) = e^{-\int h_0(t)e^{\beta z}dt} = S_0(t)^{e^{\beta z}}$. By using a log-log transformation (i.e., $log\{-logS(t|Z = z)\}$), we will have $$log\{-log\hat{S}(t|Z = z)\} - log\{-log\hat{S}_0(t)\} = \beta,$$ where $Z \in \{0, 1\}$ is an indicator variable, e.g., sex. Such equation indicates two parallel curves if the proportional assumption holds. Figure 4 shows the transformed survival functions estimated by the K-M estimator along with the log of time. 
 
-```{r, fig.align='center'}
+The other simple way is to compare the differences between the observed and fitted survival functions (Figure 5). 
+
+```{r, fig.align='center', fig.cap=c("Log of Negative Log of Estimated Survival Functions", "Observed vs. Fitted")}
 # --- Graphical method ---
 # import data
 dat_lung_raw <- survival::lung
@@ -174,8 +176,7 @@ x_ticks <- c(5, 10, 20, 50, 100, 200, 500, 1000)
 log_x <- round(log(x_ticks), 1)
 
 plot(fit_km_sex, fun = "cloglog", col = c("black", "red"), xaxt = "none",
-     xlab = "log (Time in Days)", ylab = "log{-log(S(t))}",
-     main = "Log of Negative Log of Estimated Survival Functios")
+     xlab = "log (Time in Days)", ylab = "log{-log(S(t))}")
 axis(1, x_ticks, log_x)
 legend("topleft", legend = c("Male", "Female"), col = c("black", "red"),
        lty = 1, cex = 1)
@@ -184,8 +185,7 @@ legend("topleft", legend = c("Male", "Female"), col = c("black", "red"),
 fit_ph_sex <- coxph(Surv(time, status == 2) ~ sex, dat_lung)
 
 plot(fit_km_sex, col = c("blue", "darkgreen"),
-     xlab = "Time (Days)", ylab = "Survival Function",
-     main = "Observed vs. Fitted")
+     xlab = "Time (Days)", ylab = "Survival Function")
 lines(survfit(fit_ph_sex, newdata = data.frame(sex = as.factor(1))), # male
       col = "red", conf.int = FALSE)
 lines(survfit(fit_ph_sex, newdata = data.frame(sex = as.factor(2))), # female
