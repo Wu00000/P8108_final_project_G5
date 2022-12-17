@@ -159,11 +159,11 @@ The KM and FH model have similar trend with no significant difference. FH has sl
 
 The Cox proportional hazards (PH) model makes two major assumptions. One of them is that the hazard functions for the survival curves of different strata will be proportional over the period of time $t$, and the other one is the relationship between the log of hazard $h(t)$ and each of the covariates will be linear. For this project, we omit the details for the latter assumption and focus on the first one as the proportional hazards assumption is significant in terms of the interpretations and the use of PH model. The following introduces some graphical methods, the interaction test, and residuals plot for assumption checking.
 
-**Graphical Approach** One of the most popular strategies for PH assumption checking is to compare the survival curves visually. Recall for a PH model, $S(t|Z = z) = e^{-\int h_0(t)e^{\beta z}dt} = S_0(t)^{e^{\beta z}}$. After the log-log transformation (i.e., $log\{-logS(t|Z = z)\}$), we will have $$log\{-log\hat{S}(t|Z = z)\} - log\{-log\hat{S}_0(t)\} = \beta,$$ where $Z \in \{0, 1\}$ is an indicator variable, e.g., sex. Such equation implies the two curves will be paralleled if the proportional assumption holds. Figure 4 shows the transformed survival functions estimated by the K-M estimator along with the log of time (days). The other approach is to compare the differences between the observed KM estimates and fitted survival functions from the PH model as the Figure 5 shown. Both these two methods suppose `sex` is the only covariate in the model.  
+**Graphical Approach** One of the most popular strategies for PH assumption checking is to compare the survival curves visually. Recall for a PH model, $S(t|Z = z) = e^{-\int h_0(t)e^{\beta z}dt} = S_0(t)^{e^{\beta z}}$. After the log-log transformation (i.e., $log\{-logS(t|Z = z)\}$), we will have $$log\{-log\hat{S}(t|Z = z)\} - log\{-log\hat{S}_0(t)\} = \beta,$$ where $Z \in \{0, 1\}$ is an indicator variable, e.g., sex. Such equation implies the two curves, albeit relatively subjective, will be approximately paralleled if the proportional assumption holds. Figure 4 shows the transformed survival functions estimated by the K-M estimator along with the log of time (days). The other approach is to compare the differences between the observed KM estimates and fitted survival functions from the PH model as the Figure 5 shown. Both these two methods suppose `sex` is the only covariate in the model.  
 
-**Residuals & Interaction Test** XXX
+**Residuals & Interaction Test** Recommended by Hosmer et al[XX1]., the assessment of PH assumption includes two steps. Starting from evaluating the significance of each covariate through a global test (e.g., Score test, partial likelihood ratio test), and then confirm the results by checking the scatter plot of Schoenfeld residuals. For these methods, we add additional two continuous variables `meal.cal` and `wt.loss` and their corresponding interaction terms with time $t$ to the original model. The reasons for choosing these two covariates is that the nutritional status and caloric intake are believed to be vital for the patients' survival as well as their response to the chemotherapy[1]. Results are shown in Figure 6 followed by part of the summary table from the interaction test.
 
-```{r, fig.align='center',  fig.cap=c("Log of Negative Log of Estimated Survival Functions", "Observed vs. Fitted")}
+```{r, fig.align='center', fig.cap=c("Log of Negative Log of Estimated Survival Functions", "Observed vs. Fitted")}
 # --- Graphical method ---
 # import data
 dat_lung_raw <- survival::lung
@@ -177,7 +177,7 @@ fit_km_sex <- survfit(Surv(time, status == 2) ~ sex, dat_lung)
 x_ticks <- c(5, 10, 20, 50, 100, 200, 500, 1000)
 log_x <- round(log(x_ticks), 1)
 
-par(mar = c(3, 3, 3, 3))
+par(mar = c(3, 1, 3, 1))
 plot(fit_km_sex, fun = "cloglog", col = c("black", "red"), xaxt = "none",
      xlab = "log (Time in Days)", ylab = "log{-log(S(t))}")
 axis(1, x_ticks, log_x)
@@ -197,7 +197,7 @@ legend("topright", legend = c("Observed Male", "Observed Female", "Fitted Male",
        col = c("blue", "darkgreen", "red", "black", lty = 1, cex = 1))
 ```
 
-```{r, fig.dim = c(6, 8)}
+```{r, fig.align='center', fig.dim = c(6, 8), fig.cap="Schoenfeld Test"}
 # --- Residuals & interaction test ---
 # residuals
 fit_ph_1 <- coxph(Surv(time, status == 2) ~ sex + meal.cal + wt.loss, dat_lung)
@@ -208,17 +208,19 @@ survminer::ggcoxzph(test_ph, ggtheme = theme_classic())
 fit_ph_2 <- coxph(Surv(time, status == 2) ~ sex + meal.cal + wt.loss +
                     sex * time + meal.cal * time + wt.loss * time,
                   dat_lung)
-summary(fit_ph_2)
+sum_ph <- summary(fit_ph_2)
+sum_ph$coefficients %>% 
+  knitr::kable(digits = 3, caption = "Summary Table for Interaction Test (part)")
 ```
 
-The above figures demonstrate that the proportional hazards assumption is hold given there is only one indicator variable `sex` in the model. From the above figures, the p values for both variables `sex` and `wt.loss` are greater than 0.05 except the variable `meal.cal`, which means that the proportional hazard assumptions is violated only for `meal.cal`. This result is not consistent with the interaction test where the assumption is retained for all three variables (P>0.05). XXX recommended a two-step procedure for PH assumption assessment where calculating the 
+Figures from the graphical analysis demonstrate that the proportional hazards assumption is hold if there is only one indicator variable `sex` in the model. While the p values from the Schoenfeld test suggest that both `sex` and `wt.loss` fulfill the assumption, i.e., P>0.05. The violation of the assumption for `meal.cal` may be resolved by either adding a interaction term into the model or performing stratification.
 
 
 ## Parametric Models
 
 
 # Conclusion
-
+brief conclusions from each section above.
 
 # Discussion
 
@@ -233,6 +235,8 @@ The above figures demonstrate that the proportional hazards assumption is hold g
 
 
 [3] Goel, M. K., Khanna, P., & Kishore, J. (2010). Understanding survival analysis: Kaplan-Meier estimate. International journal of Ayurveda research, 1(4), 274.
+
+[XX1] Hosmer, D. W., Lemeshow, S., &amp; May, S. (2011). In Applied survival analysis: Regression modeling of time to event data. essay, Wiley. 
 
 
 # Appendix {-}
