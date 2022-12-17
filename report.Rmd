@@ -155,6 +155,40 @@ The KM and FH model have similar trend with no significant difference. FH has sl
 
 ### Variable Selection and Stratification
 
+In order to find the varaibles of central interest on the outcome, we applied three variable selection models here, backward elimination selection, stepwise selection and forward selection models. There are two ways of scoring a model based on its log-likelihood and complexity returned by PROC PHREG function in SAS here, Akaike Information Criterion (AIC) and Schwartz's Bayesian Criterion (SBC) (which is commonly known as the Bayesian Information Criterion (BIC)). As it is indicated in the figures below, the stepwise selection model comes with the AIC of 1009.889 with covariates (Table 4). Both the forward selection (Table 2) and backward selection model (Table 3) returned the AIC of 1009.462, which is pretty close to the value in stepwise. To develop the most appropriate model, we move on to compare the SBC indexes in three models. Both forward selection and backward selection model have SBC value of 1023.441 while the stepwise selection model have SBC value of 1018.276. Therefore, we determine to set up the results of utilize the stepwise selection as the final model. 
+
+<center>
+![Table 2: Forward Selectioin Model Criterion](forward_criterion.png){width=50%}
+
+</center>
+
+<center>
+
+![Table 3: Backward Selectioin Model Criterion](backward_criterion.png){width=50%}
+
+</center>
+
+<center>
+
+![Table 4: Stepwise Selectioin Model Criterion](stepwise_criterion.png){width=50%}
+
+</center>
+
+In the stepwise selection model, we set up the level of entry as 0.25 and the level of stay of 0.15 based on the common use. It turns out that the variables remaining in the final model are the sex, ECOG performance score, and Karnofsky performance score rated by physician (Table 5). The variable of weight loss in last six months was kicked out because its p-value exceeds 0.15 when it is included in the model. 
+
+<center>
+
+![Table 5: Stepwise Selectioin Model Results](stepwise.png){width=70%}
+
+</center>
+
+As we have mentioned previously, the goal of this paper is to investigate the different impact on the outcome between two groups of sex, therefore we pre-specified to stratify by sex in the next model. The male group is represented by 1 and female by 2. Through PROC PHREG function in SAS, the results suggest that the risk of lung cancer in female is 0.588 times that in male (Table 6). 
+
+<center>
+
+![Table 6: Estimator Results Stratified by Sex](sex.png){width=70%}
+</center>
+
 ### Model Checking  
 
 The Cox proportional hazards (PH) model makes two major assumptions. One of them is that the hazard functions for the survival curves of different strata will be proportional over the period of time $t$, and the other one is the relationship between the log of hazard $h(t)$ and each of the covariates will be linear. For this project, we omit the details for the latter assumption and focus on the first one as the proportional hazards assumption is significant in terms of the interpretations and the use of PH model. The following introduces some graphical methods, the interaction test, and residuals plot for assumption checking.
