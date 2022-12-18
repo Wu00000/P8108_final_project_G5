@@ -295,7 +295,13 @@ brief conclusions from each section above.
 
 In this project, we use non-parametric estimate, hypothesis testing, semi-parametric model and parametric model to conduct a survival analysis of patients with advanced lung cancer. However, there are some limitations in this project. 
 
-First, we removed missing values in the dataset before statistical analysis. This is an easy way to deal with missing data but may lead to less accurate analysis results due to the reduced sample size. There are some other methods to keep the number of observations we have, such as mean imputation and regression imputation. But those methods may increase the complexity of the data manipulation process. 
+**Missing Values** We removed missing values in the dataset before statistical analysis. This is an easy way to deal with missing data but may lead to less accurate analysis results due to the reduced sample size. There are some other methods to keep the number of observations we have, such as mean imputation and regression imputation. But those methods may increase the complexity of the data manipulation process. 
+
+**Linearity Between Log Hazard and Covariates**
+
+**Competing Risk**
+
+**Multicovariates Analysis**
 
 \newpage
 # Reference {-}
