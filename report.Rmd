@@ -96,14 +96,14 @@ data %>%
   bold_labels()
 ```
 
-From the table, we can see that average survival time for censored and dead patients is 363 days and 283 days, respectively. From the p values, we can see that for patients who were alive and dead, the survival time, sex proportion, ECOG performance score and Karnofsky performance score rated by patient are significantly different. However, there are no significant differences in age, Karnofsky performance score rated by physician, calories consumed, and weight loss. (Note that the p values for all continuous variables are obtained from Wilcoxon rank sum tests while Fisher's exact tests for the categorical.)
+From **Table 1**, we can see that average survival time for censored and dead patients is 363 days and 283 days, respectively. From the p values, we can see that for patients who were alive and dead, the survival time, sex proportion, ECOG performance score and Karnofsky performance score rated by patient are significantly different. However, there are no significant differences in age, Karnofsky performance score rated by physician, calories consumed, and weight loss.
 
 From the table we can see that there are some missing values in this dataset. For simplicity, we removed those missing data for the following analysis.
 
 
 ## Non-parametric Estimate
 
-**Lifetable** The lifetable was constructed using standard life table methodology[2]. Table 2 represents the lifetable with the time break of 100 days stratified by sex. The full table was in supplementary material. Based on the lifetable, the 50\% survival time of male is between 285 to 286 days versus 433-434 for female. Male has lower survival time than female based on lifetable. The hypothesis need future testify in the following modeling fitting.
+**Lifetable** The lifetable was constructed using standard life table methodology[2]. **Table 2** represents the lifetable with the time break of 100 days stratified by sex. The full table was in supplementary material. Based on the lifetable, the 50\% survival time of male is between 285 to 286 days versus 433-434 for female. Male has lower survival time than female based on lifetable. The hypothesis need future testify in the following modeling fitting.
 
 <center>
 
@@ -138,7 +138,7 @@ $$
 \prod_{t_i \le t} exp[-\frac{d_i}{n_i}] & \text { if }   t \ge t_1
 \end{cases}
 $$
-Both the KM estimator and the FH estimator have P-values that are lower than 0.05. We have 95\% confidence that there are differences between the survival curves over the male and female. According to the following graph(Figure 1), male have a lesser chance of living through the 3 years than female. The difference between sex is more significant in the early time point than the later time point. 
+Both the KM estimator and the FH estimator have P-values that are lower than 0.05. We have 95\% confidence that there are differences between the survival curves over the male and female. According to the following graph (**Figure 1**), male have a lesser chance of living through the 3 years than female. The difference between sex is more significant in the early time point than the later time point. 
 
 <center>
 
@@ -151,9 +151,9 @@ The KM and FH model have similar trend with no significant difference. FH has sl
 
 
 ## Hypothesis Testing
-**Log-Rank test and Wilcoxon test** Non-parametric test was conducted to compare the survival experience between males and females, using Log-Rank test and Wilcoxon test (Table 3). However, according to the SAS output, inconsistent results were generated. The Log-Rank test gave us a test statistic of 6.23 with a p-value of 0.01. Thus, we will reject the null hypothesis and conclude that there is a significant difference in survival experience between males and females. However, when we move on to use the Wilcoxon test, chi-square statistic is 3.04, with its associated p-value 0.08. We thus fail to reject the null hypothesis and conclude that there is no significant difference between two sex groups. The underlying reason behind this discrepancy is due to the fact that the Wilcoxon test is more sensitive to detect early points in time than the Log-Rank test.
+**Log-Rank test and Wilcoxon test** Non-parametric test was conducted to compare the survival experience between males and females, using Log-Rank test and Wilcoxon test (**Table 3**). However, according to the SAS output, inconsistent results were generated. The Log-Rank test gave us a test statistic of 6.23 with a p-value of 0.01. Thus, we will reject the null hypothesis and conclude that there is a significant difference in survival experience between males and females. However, when we move on to use the Wilcoxon test, chi-square statistic is 3.04, with its associated p-value 0.08. We thus fail to reject the null hypothesis and conclude that there is no significant difference between two sex groups. The underlying reason behind this discrepancy is due to the fact that the Wilcoxon test is more sensitive to detect early points in time than the Log-Rank test.
 
-**Survival Curve** By looking at survival curves for males and females (Figure 2), apparently in the earlier point in time, there is no obvious difference in survival probability between males and females. Nevertheless, for the later point in time,the gap starts getting larger. This gap explains why we got a non-significant result from the Wilcoxon test: it has more weights to detect earlier time that has no significant difference.
+**Survival Curve** By looking at survival curves for males and females (**Figure 2**), apparently in the earlier point in time, there is no obvious difference in survival probability between males and females. Nevertheless, for the later point in time,the gap starts getting larger. This gap explains why we got a non-significant result from the Wilcoxon test: it has more weights to detect earlier time that has no significant difference.
 
 \newpage
 
@@ -170,7 +170,7 @@ knitr::include_graphics("Product-Limit Survival_Estimate.png")
 
 ### Variable Selection and Stratification
 
-In order to find the varaibles of central interest on the outcome, we applied three variable selection models here, backward elimination selection, stepwise selection and forward selection models. There are two ways of scoring a model based on its log-likelihood and complexity returned by PROC PHREG function in SAS here, Akaike Information Criterion (AIC) and Schwartz's Bayesian Criterion (SBC) (which is commonly known as the Bayesian Information Criterion (BIC)). As it is indicated in the figures below, the stepwise selection model comes with the AIC of 1009.889 with covariates (Table 6). Both the forward selection (Table 4) and backward selection model (Table 5) returned the AIC of 1009.462, which is pretty close to the value in stepwise. To develop the most appropriate model, we move on to compare the SBC indexes in three models. Both forward selection and backward selection model have SBC value of 1023.441 while the stepwise selection model have SBC value of 1018.276. Therefore, we determine to set up the results of utilize the stepwise selection as the final model. 
+In order to find the varaibles of central interest on the outcome, we applied three variable selection models here, backward elimination selection, stepwise selection and forward selection models. There are two ways of scoring a model based on its log-likelihood and complexity returned by PROC PHREG function in SAS here, Akaike Information Criterion (AIC) and Schwartz's Bayesian Criterion (SBC) (which is commonly known as the Bayesian Information Criterion (BIC)). As it is indicated in the figures below, the stepwise selection model comes with the AIC of 1009.889 with covariates (**Table 6**). Both the forward selection (**Table 4**) and backward selection model (**Table 5**) returned the AIC of 1009.462, which is pretty close to the value in stepwise. To develop the most appropriate model, we move on to compare the SBC indexes in three models. Both forward selection and backward selection model have SBC value of 1023.441 while the stepwise selection model have SBC value of 1018.276. Therefore, we determine to set up the results of utilize the stepwise selection as the final model. 
 
 ```{r,echo=FALSE, out.width= "35%", fig.cap=c("Table 4: Forward Selectioin Model Criterion", "Table 5: Backward Selectioin Model Criterion", "Table 6: Stepwise Selectioin Model Criterion"), fig.align='center'}
 knitr::include_graphics("forward_criterion.png")
@@ -185,27 +185,26 @@ knitr::include_graphics("stepwise_criterion.png")
 
 
 
-In the stepwise selection model, we set up the level of entry as 0.25 and the level of stay of 0.15 based on the common use. It turns out that the variables remaining in the final model are the sex, ECOG performance score, and Karnofsky performance score rated by physician (Table 7). The variable of weight loss in last six months was kicked out because its p-value exceeds 0.15 when it is included in the model. 
+In the stepwise selection model, we set up the level of entry as 0.25 and the level of stay of 0.15 based on the common use. It turns out that the variables remaining in the final model are the sex, ECOG performance score, and Karnofsky performance score rated by physician (**Table 7**). The variable of weight loss in last six months was kicked out because its p-value exceeds 0.15 when it is included in the model. 
 
 ```{r,echo=FALSE, out.width= "70%", fig.cap=c("Table 7: Stepwise Selectioin Model Results"), fig.align='center'}
 knitr::include_graphics("stepwise.png")
 ```
 
-As we have mentioned previously, the goal of this paper is to investigate the different impact on the outcome between two groups of sex, therefore we pre-specified to stratify by sex in the next model. The male group is represented by 1 and female by 2. Through PROC PHREG function in SAS, the results suggest that the risk of lung cancer in female is 0.588 times that in male (Table 8). 
+As we have mentioned previously, the goal of this paper is to investigate the different impact on the outcome between two groups of sex, therefore we pre-specified to stratify by sex in the next model. The male group is represented by 1 and female by 2. Through PROC PHREG function in SAS, the results suggest that the risk of lung cancer in female is 0.588 times that in male (**Table 8**). 
 
 ```{r,echo=FALSE, out.width= "70%", fig.cap=c("Table 8: Estimator Results Stratified by Sex"), fig.align='center'}
 knitr::include_graphics("sex.png")
 ```
 
 
-
 ### Model Checking  
 
 The Cox proportional hazards (PH) model makes two major assumptions. One of them is that the hazard functions for the survival curves of different strata will be proportional over the period of time $t$, and the other one is the relationship between the log of hazard $h(t)$ and each of the covariates will be linear. For this project, we omit the details for the latter assumption and focus on the first one as the proportional hazards assumption is significant in terms of the interpretations and the use of PH model. The following introduces some graphical methods, the interaction test, and residuals plot for assumption checking.
 
-**Graphical Approach** One of the most popular strategies for PH assumption checking is to compare the survival curves visually. Recall for a PH model, $S(t|Z = z) = e^{-\int h_0(t)e^{\beta z}dt} = S_0(t)^{e^{\beta z}}$. After the log-log transformation (i.e., $log\{-logS(t|Z = z)\}$), we will have $$log\{-log\hat{S}(t|Z = z)\} - log\{-log\hat{S}_0(t)\} = \beta,$$ where $Z \in \{0, 1\}$ is an indicator variable, e.g., sex. Such equation implies the two curves, albeit relatively subjective, will be approximately paralleled if the proportional assumption holds. Figure 3 shows the transformed survival functions estimated by the K-M estimator along with the log of time (days). The other approach is to compare the differences between the observed KM estimates and fitted survival functions from the PH model as the Figure 4 shown. Both these two methods suppose `sex` is the only covariate in the model.  
+**Graphical Approach** One of the most popular strategies for PH assumption checking is to compare the survival curves visually. Recall for a PH model, $S(t|Z = z) = e^{-\int h_0(t)e^{\beta z}dt} = S_0(t)^{e^{\beta z}}$. After the log-log transformation (i.e., $log\{-logS(t|Z = z)\}$), we will have $$log\{-log\hat{S}(t|Z = z)\} - log\{-log\hat{S}_0(t)\} = \beta,$$ where $Z \in \{0, 1\}$ is an indicator variable, e.g., sex. Such equation implies the two curves, albeit relatively subjective, will be approximately paralleled if the proportional assumption holds. **Figure 3** shows the transformed survival functions estimated by the K-M estimator along with the log of time (days). The other approach is to compare the differences between the observed KM estimates and fitted survival functions from the PH model as the **Figure 4** shown. Both these two methods suppose `sex` is the only covariate in the model.  
 
-**Residuals & Interaction Test** Recommended by Hosmer et al[4]., the assessment of PH assumption includes two steps. Starting from evaluating the significance of each covariate through a global test (e.g., Score test, partial likelihood ratio test), and then confirm the results by checking the scatter plot of Schoenfeld residuals. For these methods, we add additional two continuous variables `meal.cal` and `wt.loss` and their corresponding interaction terms with time $t$ to the original model. The reasons for choosing these two covariates is that the nutritional status and caloric intake are believed to be vital for the patients' survival as well as their response to the chemotherapy[1]. Results are shown in Figure 5 followed by part of the summary table from the interaction test.
+**Residuals & Interaction Test** Recommended by Hosmer et al[4]., the assessment of PH assumption includes two steps. Starting from evaluating the significance of each covariate through a global test (e.g., Score test, partial likelihood ratio test), and then confirm the results by checking the scatter plot of Schoenfeld residuals. For these methods, we add additional two continuous variables `meal.cal` and `wt.loss` and their corresponding interaction terms with time $t$ to the original model. The reasons for choosing these two covariates is that the nutritional status and caloric intake are believed to be vital for the patients' survival as well as their response to the chemotherapy[1]. Results are shown in **Figure 5** followed by part of the summary table (**Table 9**) from the interaction test.
 
 ```{r, fig.align='center', out.width= "80%", fig.cap=c("Figure 3: Log of Negative Log of Estimated Survival Functions", "Figure 4: Observed vs. Fitted")}
 # --- Graphical method ---
@@ -285,7 +284,7 @@ Based on the survival curves generated by the Kaplan-Meier estimators, we observ
 
 ### Model Checking
 
-Several plots can be used to check if the hazard rate is constant. First, we plotted $-log\hat{S}(t)$ against $t$ to estimate the cumulative hazard function, and a straight line will indicate a constant hazard rate. Then, we referred to the previous plot of $log(-log\hat{S}(t))$ against $log\ t$ as shown in Figure 3. For an exponential distribution, $log(-logS(t))=log\lambda t=log\lambda+logt$, and for a Weibull distribution, $log(-logS(t))=log\lambda t^{\alpha}=log\lambda+\alpha logt$. Thus a straight line with a slope of 1 will indicate a constant hazard rate. At last, we fitted the survival curves into both an exponential and a Weibull distribution to visually inspect the similarity to the K-M estimators. The results are shown in Figure 6. 
+Several plots can be used to check if the hazard rate is constant. First, we plotted $-log\hat{S}(t)$ against $t$ to estimate the cumulative hazard function, and a straight line will indicate a constant hazard rate. Then, we referred to the previous plot of $log(-log\hat{S}(t))$ against $log\ t$ as shown in **Figure 3**. For an exponential distribution, $log(-logS(t))=log\lambda t=log\lambda+logt$, and for a Weibull distribution, $log(-logS(t))=log\lambda t^{\alpha}=log\lambda+\alpha logt$. Thus a straight line with a slope of 1 will indicate a constant hazard rate. At last, we fitted the survival curves into both an exponential and a Weibull distribution to visually inspect the similarity to the K-M estimators. The results are shown in **Figure 6**. 
 
 ```{r,echo=FALSE, out.width= "100%" , fig.cap=c("Figure 6: Negative Log of Estimated Survival Functions, and Parametric Estimated Survival Curves"), fig.align='center'}
 knitr::include_graphics("figure6.png")
@@ -324,7 +323,7 @@ For a Weibull baseline hazard function, the Accelerated Failure-Time Model is eq
 
 ### Goodness of Fit
 
-In order to check the goodness of fit, we compared the estimated baseline cumulative hazard function of the parametric model to that of a semi-parametric model, which is close to the observed data because no function is specified for the baseline hazard function. The results are shown in Figure 7. The solid curve is the parametric Weibull cumulative hazard function and the dashed curve is the Cox baseline cumulative hazard function. It appears that the parametric function fits well to the semi-parametric function.
+In order to check the goodness of fit, we compared the estimated baseline cumulative hazard function of the parametric model to that of a semi-parametric model, which is close to the observed data because no function is specified for the baseline hazard function. The results are shown in **Figure 7**. The solid curve is the parametric Weibull cumulative hazard function and the dashed curve is the Cox baseline cumulative hazard function. It appears that the parametric function fits well to the semi-parametric function.
 
 ```{r,echo=FALSE, out.width= "70%" , fig.cap=c("Figure 7: Baseline Cumulative Hazard Functions Comparison"), fig.align='center'}
 knitr::include_graphics("figure7.png")

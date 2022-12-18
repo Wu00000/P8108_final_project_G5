@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.12.18)  18 DEC 2022 17:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.12.18)  18 DEC 2022 17:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -508,64 +508,64 @@ File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 <lifetablemale.png, id=87, 1019.81pt x 296.10625pt>
 File: lifetablemale.png Graphic file (type png)
 <use lifetablemale.png>
-Package pdftex.def Info: lifetablemale.png  used on input line 256.
+Package pdftex.def Info: lifetablemale.png  used on input line 254.
 (pdftex.def)             Requested size: 469.7563pt x 136.39577pt.
 <lifetablefemale.png, id=89, 998.73125pt x 286.06876pt>
 File: lifetablefemale.png Graphic file (type png)
 <use lifetablefemale.png>
-Package pdftex.def Info: lifetablefemale.png  used on input line 262.
+Package pdftex.def Info: lifetablefemale.png  used on input line 260.
 (pdftex.def)             Requested size: 469.75426pt x 134.55272pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 277.
+(Font)              <10> on input line 275.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 277.
+(Font)              <7> on input line 275.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 277.
+(Font)              <5> on input line 275.
 [3 <./lifetablemale.png> <./lifetablefemale.png>]
 <KMFH.png, id=106, 958.58125pt x 597.23125pt>
 File: KMFH.png Graphic file (type png)
 <use KMFH.png>
-Package pdftex.def Info: KMFH.png  used on input line 308.
+Package pdftex.def Info: KMFH.png  used on input line 306.
 (pdftex.def)             Requested size: 469.7528pt x 292.6732pt.
 [4 <./KMFH.png>]
 <Non-parametric_test.png, id=114, 220.825pt x 108.405pt>
 File: Non-parametric_test.png Graphic file (type png)
 <use Non-parametric_test.png>
-Package pdftex.def Info: Non-parametric_test.png  used on input line 345.
+Package pdftex.def Info: Non-parametric_test.png  used on input line 343.
 (pdftex.def)             Requested size: 164.42552pt x 80.71797pt.
 <Product-Limit Survival_Estimate.png, id=115, 641.39626pt x 481.8pt>
 File: Product-Limit Survival_Estimate.png Graphic file (type png)
 <use Product-Limit Survival_Estimate.png>
-Package pdftex.def Info: Product-Limit Survival_Estimate.png  used on input line 354.
+Package pdftex.def Info: Product-Limit Survival_Estimate.png  used on input line 352.
 (pdftex.def)             Requested size: 375.8074pt x 282.29663pt.
 <forward_criterion.png, id=116, 468.75125pt x 281.05pt>
 File: forward_criterion.png Graphic file (type png)
 <use forward_criterion.png>
-Package pdftex.def Info: forward_criterion.png  used on input line 388.
+Package pdftex.def Info: forward_criterion.png  used on input line 386.
 (pdftex.def)             Requested size: 164.41586pt x 98.5791pt.
 <backward_criterion.png, id=117, 428.60126pt x 256.96pt>
 File: backward_criterion.png Graphic file (type png)
 <use backward_criterion.png>
-Package pdftex.def Info: backward_criterion.png  used on input line 396.
+Package pdftex.def Info: backward_criterion.png  used on input line 394.
 (pdftex.def)             Requested size: 164.41359pt x 98.57114pt.
 [5 <./Non-parametric_test.png> <./Product-Limit Survival_Estimate.png>]
 <stepwise_criterion.png, id=128, 330.23375pt x 196.735pt>
 File: stepwise_criterion.png Graphic file (type png)
 <use stepwise_criterion.png>
-Package pdftex.def Info: stepwise_criterion.png  used on input line 404.
+Package pdftex.def Info: stepwise_criterion.png  used on input line 402.
 (pdftex.def)             Requested size: 164.42108pt x 97.95297pt.
 <stepwise.png, id=129, 752.8125pt x 279.0425pt>
 File: stepwise.png Graphic file (type png)
 <use stepwise.png>
-Package pdftex.def Info: stepwise.png  used on input line 420.
+Package pdftex.def Info: stepwise.png  used on input line 418.
 (pdftex.def)             Requested size: 328.83774pt x 121.88918pt.
 [6 <./forward_criterion.png> <./backward_criterion.png> <./stepwise_criterion.png> <./stepwise.png>]
 <sex.png, id=142, 823.075pt x 135.50626pt>
 File: sex.png Graphic file (type png)
 <use sex.png>
-Package pdftex.def Info: sex.png  used on input line 436.
+Package pdftex.def Info: sex.png  used on input line 434.
 (pdftex.def)             Requested size: 328.82227pt x 54.13536pt.
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 471.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 469.
 (/Users/qihangwu/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -613,7 +613,7 @@ Here is how much of TeX's memory you used:
  14 hyphenation exceptions out of 8191
  72i,9n,77p,369b,552s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb></Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></Users/qihangwu/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on report.pdf (14 pages, 1434977 bytes).
+Output written on report.pdf (14 pages, 1435958 bytes).
 PDF statistics:
  314 PDF objects out of 1000 (max. 8388607)
  232 compressed objects within 3 object streams
