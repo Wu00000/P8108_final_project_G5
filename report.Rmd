@@ -192,7 +192,7 @@ knitr::include_graphics("stepwise.png")
 
 As we have mentioned previously, the goal of this paper is to investigate the different impact on the outcome between two groups of sex, therefore we pre-specified to stratify by sex in the next model. The male group is represented by 1 and female by 2. Through PROC PHREG function in SAS, the results suggest that the risk of lung cancer in female is 0.588 times that in male (Table 8). 
 
-```{r,echo=FALSE, out.width= "70%", fig.cap=c("TTable 8: Estimator Results Stratified by Sex"), fig.align='center'}
+```{r,echo=FALSE, out.width= "70%", fig.cap=c("Table 8: Estimator Results Stratified by Sex"), fig.align='center'}
 knitr::include_graphics("sex.png")
 ```
 
