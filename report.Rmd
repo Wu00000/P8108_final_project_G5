@@ -148,7 +148,13 @@ The KM and FH model have similar trend with no significant difference. FH has sl
 
 
 ## Hypothesis Testing
+**Log-Rank test and Wilcoxon test** Non-parametric test was conducted to compare the survival experience between males and females, using Log-Rank test and Wilcoxon test (Figure 4). However, according to the SAS output, inconsistent results were generated. The Log-Rank test gave us a test statistic of 6.23 with a p-value of 0.01. Thus, we will reject the null hypothesis and conclude that there is a significant difference in survival experience between males and females. However, when we move on to use the Wilcoxon test, chi-square statistic is 3.04, with its associated p-value 0.08. We thus fail to reject the null hypothesis and conclude that there is no significant difference between two sex groups. The underlying reason behind this discrepancy is due to the fact that the Wilcoxon test is more sensitive to detect early points in time than the Log-Rank test.
 
+**Survival Curve** By looking at survival curves for males and females (Figure 5), apparently in the earlier point in time, there is no obvious difference in survival probability between males and females. Nevertheless, for the later point in time,the gap starts getting larger. This gap explains why we got a non-significant result from the Wilcoxon test: it has more weights to detect earlier time that has no significant difference.
+<center>
+![Comparison of survival experience between males and females](Non-parametric_test.png)
+<center>
+![Comparison of survival experience between males and females](Product-Limit Survival_Estimate.png){width=85%}
 
 ## Semi-parametric Model (PH model)
 
