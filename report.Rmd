@@ -220,7 +220,7 @@ fit_km_sex <- survfit(Surv(time, status == 2) ~ sex, dat_lung)
 x_ticks <- c(5, 10, 20, 50, 100, 200, 500, 1000)
 log_x <- round(log(x_ticks), 1)
 
-par(mar = c(3, 1, 3, 1))
+par(mar = c(4, 4, 4, 4))
 plot(fit_km_sex, fun = "cloglog", col = c("black", "red"), xaxt = "none",
      xlab = "log (Time in Days)", ylab = "log{-log(S(t))}")
 axis(1, x_ticks, log_x)
