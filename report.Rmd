@@ -210,7 +210,7 @@ The Cox proportional hazards (PH) model makes two major assumptions. One of them
 
 **Graphical Approach** One of the most popular strategies for PH assumption checking is to compare the survival curves visually. Recall for a PH model, $S(t|Z = z) = e^{-\int h_0(t)e^{\beta z}dt} = S_0(t)^{e^{\beta z}}$. After the log-log transformation (i.e., $log\{-logS(t|Z = z)\}$), we will have $$log\{-log\hat{S}(t|Z = z)\} - log\{-log\hat{S}_0(t)\} = \beta,$$ where $Z \in \{0, 1\}$ is an indicator variable, e.g., sex. Such equation implies the two curves, albeit relatively subjective, will be approximately paralleled if the proportional assumption holds. Figure 3 shows the transformed survival functions estimated by the K-M estimator along with the log of time (days). The other approach is to compare the differences between the observed KM estimates and fitted survival functions from the PH model as the Figure 4 shown. Both these two methods suppose `sex` is the only covariate in the model.  
 
-**Residuals & Interaction Test** Recommended by Hosmer et al[XX1]., the assessment of PH assumption includes two steps. Starting from evaluating the significance of each covariate through a global test (e.g., Score test, partial likelihood ratio test), and then confirm the results by checking the scatter plot of Schoenfeld residuals. For these methods, we add additional two continuous variables `meal.cal` and `wt.loss` and their corresponding interaction terms with time $t$ to the original model. The reasons for choosing these two covariates is that the nutritional status and caloric intake are believed to be vital for the patients' survival as well as their response to the chemotherapy[1]. Results are shown in Figure 5 followed by part of the summary table from the interaction test.
+**Residuals & Interaction Test** Recommended by Hosmer et al[4]., the assessment of PH assumption includes two steps. Starting from evaluating the significance of each covariate through a global test (e.g., Score test, partial likelihood ratio test), and then confirm the results by checking the scatter plot of Schoenfeld residuals. For these methods, we add additional two continuous variables `meal.cal` and `wt.loss` and their corresponding interaction terms with time $t$ to the original model. The reasons for choosing these two covariates is that the nutritional status and caloric intake are believed to be vital for the patients' survival as well as their response to the chemotherapy[1]. Results are shown in Figure 5 followed by part of the summary table from the interaction test.
 
 ```{r, fig.align='center', fig.cap=c("Figure 3: Log of Negative Log of Estimated Survival Functions", "Figure 4: Observed vs. Fitted")}
 # --- Graphical method ---
@@ -305,9 +305,8 @@ In this project, we use non-parametric estimate, hypothesis testing, semi-parame
 
 **Linearity Between Log Hazard and Covariates** In the assumptions checking of Cox proportional hazards (PH) model, we ignore the assumption that relationship between the log of hazard $h(t)$ and each of the covariates will be linear. However, in order to make sure the PH model is appropriate in this project, we need to further detect linearity between log hazard and the covariates, such as martingale residuals $r_{Mi}$ or deviance residuals $r_{Di}$ to assess the potential outliers.
 
-**Competing Risk**
+**Competing Risk** In this project, mortality caused by lung cancer is of research interest. However, senior patients in our study could possibly die from other diseases such as heart attack or breast cancer. Traditional methods for survival analysis that we use in this project, are not designed to accommodate the competing nature of multiple causes of the death. When estimating the marginal probability of a cause-specific event, these methods tend to produce inaccurate results. Therefore, a competing risk analysis should be further performed. Cumulative Incidence Function (CIF) is a well-known method for competing risk analysis, to accurately estimate the marginal probability of a certain event as a function of its cause-specific probability and overall survival probability.
 
-**Multicovariates Analysis**
 
 \newpage
 # Reference {-}
@@ -319,7 +318,7 @@ In this project, we use non-parametric estimate, hypothesis testing, semi-parame
 
 [3] Goel, M. K., Khanna, P., & Kishore, J. (2010). Understanding survival analysis: Kaplan-Meier estimate. International journal of Ayurveda research, 1(4), 274.
 
-[XX1] Hosmer, D. W., Lemeshow, S., &amp; May, S. (2011). In Applied survival analysis: Regression modeling of time to event data. essay, Wiley. 
+[4] Hosmer, D. W., Lemeshow, S., &amp; May, S. (2011). In Applied survival analysis: Regression modeling of time to event data. essay, Wiley. 
 
 
 # Appendix {-}
