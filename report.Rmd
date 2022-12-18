@@ -143,6 +143,8 @@ Both the KM estimator and the FH estimator have P-values that are lower than 0.0
 
 ![Figure 1: Kaplan-Meier model and Fleming -Harrington model (sex=1 (male), sex=2 (female))](KMFH.png)
 
+</center>
+
 The KM and FH model have similar trend with no significant difference. FH has slight higher estimator in the late time point than KM estimator.
 
 
@@ -152,16 +154,15 @@ The KM and FH model have similar trend with no significant difference. FH has sl
 
 **Survival Curve** By looking at survival curves for males and females (Figure 2), apparently in the earlier point in time, there is no obvious difference in survival probability between males and females. Nevertheless, for the later point in time,the gap starts getting larger. This gap explains why we got a non-significant result from the Wilcoxon test: it has more weights to detect earlier time that has no significant difference.
 
-<center>
-![Table 3: Comparison of survival experience between males and females](Non-parametric_test.png){width=50%}
+\newpage
 
-</center>
+```{r,echo=FALSE, out.width= "35%" , fig.cap=c("Table 3: Comparison of survival experience between males and females"), fig.align='center'}
+knitr::include_graphics("Non-parametric_test.png")
+```
 
-<center>
-
-![Figure 2: Comparison of survival experience between males and females](Product-Limit Survival_Estimate.png){width=90%}
-
-</center>
+```{r,echo=FALSE, out.width= "80%", fig.cap=c("Figure 2: Comparison of survival experience between males and females"), fig.align='center'}
+knitr::include_graphics("Product-Limit Survival_Estimate.png")
+```
 
 ## Semi-parametric Model (PH model)
 
@@ -170,39 +171,32 @@ The KM and FH model have similar trend with no significant difference. FH has sl
 
 In order to find the varaibles of central interest on the outcome, we applied three variable selection models here, backward elimination selection, stepwise selection and forward selection models. There are two ways of scoring a model based on its log-likelihood and complexity returned by PROC PHREG function in SAS here, Akaike Information Criterion (AIC) and Schwartz's Bayesian Criterion (SBC) (which is commonly known as the Bayesian Information Criterion (BIC)). As it is indicated in the figures below, the stepwise selection model comes with the AIC of 1009.889 with covariates (Table 6). Both the forward selection (Table 4) and backward selection model (Table 5) returned the AIC of 1009.462, which is pretty close to the value in stepwise. To develop the most appropriate model, we move on to compare the SBC indexes in three models. Both forward selection and backward selection model have SBC value of 1023.441 while the stepwise selection model have SBC value of 1018.276. Therefore, we determine to set up the results of utilize the stepwise selection as the final model. 
 
-<center>
+```{r,echo=FALSE, out.width= "35%", fig.cap=c("Table 4: Forward Selectioin Model Criterion", "Table 5: Backward Selectioin Model Criterion", "Table 6: Stepwise Selectioin Model Criterion"), fig.align='center'}
+knitr::include_graphics("forward_criterion.png")
+knitr::include_graphics("backward_criterion.png")
+knitr::include_graphics("stepwise_criterion.png")
+```
 
-![Table 4: Forward Selectioin Model Criterion](forward_criterion.png){width=50%}
 
-</center>
 
-<center>
 
-![Table 5: Backward Selectioin Model Criterion](backward_criterion.png){width=50%}
 
-</center>
 
-<center>
 
-![Table 6: Stepwise Selectioin Model Criterion](stepwise_criterion.png){width=50%}
-
-</center>
 
 In the stepwise selection model, we set up the level of entry as 0.25 and the level of stay of 0.15 based on the common use. It turns out that the variables remaining in the final model are the sex, ECOG performance score, and Karnofsky performance score rated by physician (Table 7). The variable of weight loss in last six months was kicked out because its p-value exceeds 0.15 when it is included in the model. 
 
-<center>
-
-![Table 7: Stepwise Selectioin Model Results](stepwise.png){width=70%}
-
-</center>
+```{r,echo=FALSE, out.width= "70%", fig.cap=c("Table 7: Stepwise Selectioin Model Results"), fig.align='center'}
+knitr::include_graphics("stepwise.png")
+```
 
 As we have mentioned previously, the goal of this paper is to investigate the different impact on the outcome between two groups of sex, therefore we pre-specified to stratify by sex in the next model. The male group is represented by 1 and female by 2. Through PROC PHREG function in SAS, the results suggest that the risk of lung cancer in female is 0.588 times that in male (Table 8). 
 
-<center>
+```{r,echo=FALSE, out.width= "70%", fig.cap=c("TTable 8: Estimator Results Stratified by Sex"), fig.align='center'}
+knitr::include_graphics("sex.png")
+```
 
-![Table 8: Estimator Results Stratified by Sex](sex.png){width=70%}
 
-</center>
 
 ### Model Checking  
 
