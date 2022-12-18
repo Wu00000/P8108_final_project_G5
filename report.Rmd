@@ -302,7 +302,7 @@ In this project, we use non-parametric estimate, hypothesis testing, semi-parame
 
 **Missing Values** We removed missing values in the dataset before statistical analysis. This is an easy way to deal with missing data but may lead to less accurate analysis results due to the reduced sample size. There are some other methods to keep the number of observations we have, such as mean imputation and regression imputation. But those methods may increase the complexity of the data manipulation process. 
 
-**Linearity Between Log Hazard and Covariates**
+**Linearity Between Log Hazard and Covariates** In the assumptions checking of Cox proportional hazards (PH) model, we ignore the assumption that relationship between the log of hazard $h(t)$ and each of the covariates will be linear. However, in order to make sure the PH model is appropriate in this project, we need to further detect linearity between log hazard and the covariates, such as martingale residuals $r_{Mi}$ or deviance residuals $r_{Di}$ to assess the potential outliers.
 
 **Competing Risk**
 
