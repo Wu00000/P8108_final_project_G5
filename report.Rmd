@@ -295,7 +295,7 @@ In order to check the goodness of fit, we compared the estimated baseline cumula
 
 # Conclusion
 
-For patients with advanced lung cancer, there is no significant difference in survival probability between males and females at early time points. However, the gap of survival probability widens over time. Proportional hazards assumption is hold if there is only one indicator variable sex in the PH model, and results show that females have 41% reduction of the risk of death than males. For the parametric model, Weibull distribution as the baseline hazard function is used. We can conclude that  males have higher hazards compared to females, patients with higher ECOG performance scores rated by the physician have higher hazards, and the impact of Karnofsky performance score rated by physician and weight loss in last six months on the survival rate are not significant.
+For patients with advanced lung cancer, there is no significant difference in survival probability between males and females at early time points. However, the gap of survival probability widens over time. Proportional hazards assumption is hold if there is only one indicator variable sex in the PH model, and results show that females have 41% reduction of the risk of death than males. The nonparametric model indicate similar conclusion that female has higher survival than male. For the parametric model, Weibull distribution as the baseline hazard function is used. We can conclude that  males have higher hazards compared to females, patients with higher ECOG performance scores rated by the physician have higher hazards, and the impact of Karnofsky performance score rated by physician and weight loss in last six months on the survival rate are not significant.
 
 # Discussion
 
