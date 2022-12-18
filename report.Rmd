@@ -61,12 +61,7 @@ data$sex <- factor(data$sex,
                    levels = c(1,2),
                    labels = c("Male", "Female"))
 data$ph.ecog <- factor(data$ph.ecog,
-                       levels = c(0,1,2,3,4),
-                       labels = c("Asymptomatic", 
-                                  "Symptomatic but completely ambulatory",
-                                  "In bed <50% of the day",
-                                  "In bed > 50% of the day but not bedbound",
-                                  "Bedbound"))
+                       levels = c(0,1,2,3))
 data$ph.karno <- factor(data$ph.karno,
                        levels = c(50,60,70,80,90,100))
 data$pat.karno <- factor(data$pat.karno,
