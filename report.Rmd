@@ -253,9 +253,26 @@ fit_ph_2 <- coxph(Surv(time, status == 2) ~ sex + meal.cal + wt.loss +
                     sex * time + meal.cal * time + wt.loss * time,
                   dat_lung)
 sum_ph <- summary(fit_ph_2)
-sum_ph$coefficients %>% 
-  knitr::kable(digits = 3, caption = "Table 9: Summary Table for Interaction Test (part)")
 ```
+
+\begin{table}[H]
+  \begin{center}
+    \begin{tabular}{c c c c c c} 
+    \hline
+     & coef & exp(coef) & se(coef) & z & Pr(>|z|)\\
+    \hline
+    sex2 & -0.405 & 0.667 & 0.479 & -0.847 & 0.397\\
+    meal.cal & 0.000 & 1.000 & 0.000 & 0.527 & 0.598\\
+    wt.loss & 0.010 & 1.010 & 0.016 & 0.643 & 0.520\\
+    time & -1.408 & 0.245 & 0.245 & -5.748 & 0.000\\
+    sex2:time & 0.001 & 1.001 & 0.002 & 0.384 & 0.701\\
+    meal.cal:time & 0.000 & 1.000 & 0.000 & -0.439 & 0.661\\
+    wt.loss:time & 0.000 & 1.000 & 0.000 & -0.411 & 0.681\\
+    \hline
+    \end{tabular}
+    \caption{\label{Table 9}Table 9: Summary Table for Interaction Test (part)}
+  \end{center}
+\end{table}
 
 Figures from the graphical analysis demonstrate that the proportional hazards assumption is hold if there is only one indicator variable `sex` in the model. While the p values from the Schoenfeld test suggest that both `sex` and `wt.loss` fulfill the assumption, i.e., P>0.05. The violation of the assumption for `meal.cal` may be resolved by either adding a interaction term into the model or performing stratification.
 
